@@ -1,236 +1,670 @@
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
+/* ==========================================
+   CONFIGURAÇÕES GERAIS E VARIÁVEIS
+   ========================================== */
+:root {
+    --azul-escuro: #001d3d;
+    --azul-claro: #00b4ff;
+    --azul-deep: #000814;
+    --cinza-fundo: #f4f7fb;
+    --texto-escuro: #111;
+    --texto-claro: #f5f5f5;
 }
 
-html{
-scroll-behavior:smooth;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Google Sans', Arial, sans-serif; /* Fonte mais moderna */
 }
 
-body{
-background:#f4f7fb;
-overflow-x:hidden;
-color:#111;
+html {
+    scroll-behavior: smooth;
+    width: 100%;
 }
 
-header{
-position:fixed;
-width:100%;
-top:0;
-padding:20px 8%;
-z-index:1000;
-transition:.4s;
+body {
+    background: var(--cinza-fundo);
+    overflow-x: hidden; /* Fundamental para os elementos da animação não criarem barra horizontal */
+    color: var(--texto-escuro);
 }
 
-header.active{
-background:#001d3d;
-box-shadow:0 4px 20px rgba(0,0,0,.25);
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
-nav{
-display:flex;
-justify-content:space-between;
-align-items:center;
+/* ==========================================
+   HEADER & NAVEGAÇÃO
+   ========================================== */
+header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding: 20px 0;
+    z-index: 1000;
+    transition: .4s ease-in-out;
 }
 
-.logo{
-font-size:1.7rem;
-font-weight:bold;
-color:white;
+/* Quando o usuário rolar a página, o JavaScript adiciona essa classe */
+header.active, header {
+    background: rgba(0, 29, 61, 0.95); /* Mantém visível e elegante */
+    box-shadow: 0 4px 20px rgba(0,0,0,.15);
+    backdrop-filter: blur(10px);
 }
 
-.logo span{
-color:#00b4ff;
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 
-nav ul{
-display:flex;
-list-style:none;
-gap:25px;
+.logo {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-nav a{
-text-decoration:none;
-color:white;
-font-weight:bold;
-transition:.3s;
+.logo i {
+    color: var(--azul-claro);
 }
 
-nav a:hover{
-color:#00b4ff;
+.logo span {
+    color: var(--azul-claro);
 }
 
-.hero{
-height:100vh;
-background:
-linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),
-url('https://images.unsplash.com/photo-1621905252507-b35492cc74b4?q=80&w=1600&auto=format&fit=crop') center/cover;
-display:flex;
-justify-content:center;
-align-items:center;
-text-align:center;
-padding:20px;
-color:white;
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 30px;
 }
 
-.hero-content{
-animation:fadeUp 1s ease;
+nav a {
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: .3s;
 }
 
-.hero h1{
-font-size:4rem;
-max-width:800px;
-margin-bottom:20px;
+nav a:hover {
+    color: var(--azul-claro);
 }
 
-.hero p{
-font-size:1.3rem;
-margin-bottom:30px;
+/* Botão rápido no Menu */
+.btn-nav {
+    background: transparent;
+    border: 2px solid var(--azul-claro);
+    padding: 10px 20px;
+    border-radius: 50px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: .3s;
 }
 
-.btn{
-background:#00b4ff;
-padding:16px 30px;
-border-radius:50px;
-text-decoration:none;
-color:white;
-font-weight:bold;
-display:inline-block;
-transition:.3s;
+.btn-nav:hover {
+    background: var(--azul-claro);
+    color: white;
 }
 
-.btn:hover{
-transform:translateY(-5px);
-background:#0095d4;
+/* ==========================================
+   SEÇÃO HERO (PREPARADA PARA ANIMAÇÃO GSAP)
+   ========================================== */
+.hero {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* Fundo profissional e frio */
+    display: flex;
+    align-items: center;
+    overflow: hidden;
 }
 
-section{
-padding:100px 8%;
+.hero-content {
+    z-index: 5;
+    position: relative;
+    max-width: 600px;
+    color: white;
+    animation: fadeUp 1s ease;
 }
 
-h2{
-font-size:2.5rem;
-margin-bottom:50px;
-text-align:center;
-color:#001d3d;
+.tagline {
+    color: var(--azul-claro);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 10px;
 }
 
-.cards{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:25px;
+.hero h1 {
+    font-size: 3.5rem;
+    line-height: 1.2;
+    margin-bottom: 20px;
 }
 
-.card{
-background:white;
-padding:40px 30px;
-border-radius:20px;
-text-align:center;
-box-shadow:0 10px 30px rgba(0,0,0,.08);
-transition:.4s;
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 35px;
+    opacity: 0.9;
 }
 
-.card:hover{
-transform:translateY(-10px);
+.hero-buttons {
+    display: flex;
+    gap: 15px;
 }
 
-.card i{
-font-size:3rem;
-color:#00b4ff;
-margin-bottom:20px;
+/* Botões Customizados */
+.btn {
+    padding: 16px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: .3s;
 }
 
-.gallery{
-background:white;
+.btn-primary {
+    background: #25d366; /* Cor do WhatsApp para conversão */
+    color: white;
 }
 
-.gallery-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
+.btn-primary:hover {
+    background: #1ebd58;
+    transform: translateY(-3px);
 }
 
-.gallery-item{
-height:300px;
-border-radius:20px;
-background:
-url('https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?q=80&w=1200&auto=format&fit=crop') center/cover;
-transition:.4s;
+.btn-secondary {
+    background: transparent;
+    border: 2px solid white;
+    color: white;
 }
 
-.gallery-item:hover{
-transform:scale(1.03);
+.btn-secondary:hover {
+    background: white;
+    color: var(--azul-escuro);
 }
 
-.cta{
-background:#001d3d;
-text-align:center;
-color:white;
+/* ELEMENTOS QUE VÃO VOAR (ESTILO FANTA) */
+#ar-principal {
+    position: absolute;
+    width: 42%;
+    top: 30%;
+    right: 5%;
+    z-index: 4;
+    filter: drop-shadow(0px 20px 40px rgba(0,0,0,0.6));
 }
 
-.cta h2{
-color:white;
+#gelo-1 {
+    position: absolute;
+    top: 15%;
+    right: 42%;
+    width: 6%;
+    z-index: 3;
 }
 
-footer{
-background:#000814;
-color:white;
-text-align:center;
-padding:50px 20px;
+#gelo-2 {
+    position: absolute;
+    top: 65%;
+    right: 10%;
+    width: 8%;
+    z-index: 5;
 }
 
-.social{
-margin:20px 0;
+#vento-bg {
+    position: absolute;
+    top: 20%;
+    right: 0%;
+    width: 50%;
+    opacity: 0.15;
+    z-index: 2;
+    pointer-events: none;
 }
 
-.social a{
-color:white;
-font-size:1.5rem;
-margin:0 10px;
-transition:.3s;
+/* Efeito CSS de flutuação leve em estado de repouso */
+.efeito-floating {
+    animation: float 4s ease-in-out infinite;
 }
 
-.social a:hover{
-color:#00b4ff;
+@keyframes float {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(8deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
 }
 
-.copy{
-opacity:.7;
-margin-top:20px;
+/* ==========================================
+   SEÇÕES GERAIS E TÍTULOS
+   ========================================== */
+section {
+    padding: 100px 0;
+    position: relative;
 }
 
-@keyframes fadeUp{
-from{
-opacity:0;
-transform:translateY(50px);
+.section-title {
+    text-align: center;
+    margin-bottom: 60px;
 }
 
-to{
-opacity:1;
-transform:translateY(0);
-}
-}
-
-@media(max-width:768px){
-
-nav{
-flex-direction:column;
-gap:20px;
+.section-title h2 {
+    font-size: 2.8rem;
+    color: var(--azul-escuro);
+    margin-bottom: 10px;
 }
 
-nav ul{
-flex-wrap:wrap;
-justify-content:center;
+.section-title p {
+    color: #666;
+    font-size: 1.1rem;
 }
 
-.hero h1{
-font-size:2.5rem;
+/* ==========================================
+   SEÇÃO SOBRE NÓS
+   ========================================== */
+.about {
+    background: white;
 }
 
-.hero p{
-font-size:1rem;
+.about-text {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
 }
+
+.about h2 {
+    font-size: 2.5rem;
+    color: var(--azul-escuro);
+    margin-bottom: 20px;
+}
+
+.about p {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #444;
+    margin-bottom: 30px;
+}
+
+.about-features {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.feat-item {
+    font-weight: bold;
+    color: var(--azul-escuro);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.feat-item i {
+    color: var(--azul-claro);
+    font-size: 1.3rem;
+}
+
+/* ==========================================
+   SEÇÃO SERVIÇOS (6 CATEGORIAS GRID)
+   ========================================== */
+.services {
+    background: var(--cinza-fundo);
+    z-index: 6; /* Fica acima do fundo da hero para esconder elementos no scroll */
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 20px;
+    text-align: left; /* Alinhamento mais profissional */
+    box-shadow: 0 10px 30px rgba(0,0,0,.05);
+    transition: .4s ease;
+    border-bottom: 4px solid transparent;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    border-bottom: 4px solid var(--azul-claro);
+}
+
+.card-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(0, 180, 255, 0.1);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.card-icon i {
+    font-size: 1.8rem;
+    color: var(--azul-claro);
+}
+
+.card h3 {
+    font-size: 1.4rem;
+    color: var(--azul-escuro);
+    margin-bottom: 15px;
+}
+
+.card p {
+    color: #555;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+/* ==========================================
+   SEÇÃO DIFERENCIAIS
+   ========================================== */
+.differentials {
+    background: white;
+}
+
+.diff-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px;
+    text-align: center;
+}
+
+.diff-item i {
+    font-size: 2.5rem;
+    color: var(--azul-claro);
+    margin-bottom: 20px;
+}
+
+.diff-item h4 {
+    font-size: 1.3rem;
+    color: var(--azul-escuro);
+    margin-bottom: 10px;
+}
+
+.diff-item p {
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* ==========================================
+   GALERIA / PROJETOS RECENTES
+   ========================================== */
+.gallery {
+    background: var(--cinza-fundo);
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.gallery-item {
+    height: 320px;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+/* Efeito de cortina ao passar o mouse na galeria */
+.gallery-hover {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 29, 61, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: .4s ease;
+}
+
+.gallery-hover span {
+    color: white;
+    font-weight: bold;
+    border: 2px solid var(--azul-claro);
+    padding: 10px 20px;
+    border-radius: 50px;
+}
+
+.gallery-item:hover .gallery-hover {
+    opacity: 1;
+}
+
+/* ==========================================
+   SEÇÃO CTA (CALL TO ACTION)
+   ========================================== */
+.cta {
+    background: linear-gradient(rgba(0, 29, 61, 0.9), rgba(0, 29, 61, 0.9)), 
+                url('https://images.unsplash.com/photo-1621905252507-b35492cc74b4?q=80&w=1600') center/cover;
+    text-align: center;
+    color: white;
+}
+
+.cta-content {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.cta h2 {
+    color: white;
+    font-size: 2.3rem;
+    margin-bottom: 15px;
+}
+
+.cta p {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+.btn-large {
+    font-size: 1.2rem;
+    padding: 18px 40px;
+}
+
+/* ==========================================
+   RODAPÉ (FOOTER)
+   ========================================== */
+footer {
+    background: var(--azul-deep);
+    color: white;
+    padding: 80px 0 30px 0;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-bottom: 50px;
+    text-align: left;
+}
+
+.footer-about h3, .footer-links h4, .footer-contact h4 {
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.footer-about p {
+    color: #aaa;
+    line-height: 1.6;
+}
+
+.footer-links ul {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    color: #aaa;
+    text-decoration: none;
+    transition: .3s;
+}
+
+.footer-links a:hover {
+    color: var(--azul-claro);
+    padding-left: 5px;
+}
+
+.footer-contact p {
+    color: #aaa;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.social {
+    margin-top: 20px;
+}
+
+.social a {
+    color: white;
+    font-size: 1.4rem;
+    margin-right: 15px;
+    transition: .3s;
+}
+
+.social a:hover {
+    color: var(--azul-claro);
+    transform: translateY(-3px);
+    display: inline-block;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 30px;
+    text-align: center;
+}
+
+.copy {
+    opacity: .6;
+    font-size: 0.9rem;
+}
+
+/* ==========================================
+   ANIMAÇÕES E RESPONSIVIDADE
+   ========================================== */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Ajustes para Dispositivos Móveis */
+@media(max-width: 992px) {
+    #ar-principal {
+        width: 50%;
+        top: 40%;
+    }
+    .hero h1 {
+        font-size: 2.8rem;
+    }
+}
+
+@media(max-width: 768px) {
+    nav {
+        flex-direction: column;
+        gap: 20px;
+    }
+    nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+    .btn-nav {
+        display: none; /* Esconde o botão do menu em telas muito pequenas */
+    }
+    .hero {
+        text-align: center;
+        justify-content: center;
+    }
+    .hero-content {
+        margin-left: 0;
+        padding: 0 20px;
+    }
+    .hero-buttons {
+        justify-content: center;
+    }
+    #ar-principal {
+        position: relative;
+        width: 80%;
+        max-width: 350px;
+        top: auto;
+        right: auto;
+        margin: 30px auto 0 auto;
+        display: block;
+    }
+    #gelo-1, #gelo-2, #vento-bg {
+        display: none; /* Desativa os elementos flutuantes no celular para não quebrar o layout */
+    }
+    .section-title h2 {
+        font-size: 2.2rem;
+    }
+    .footer-grid {
+        text-align: center;
+    }
+    .footer-contact p {
+        justify-content: center;
+    }
+}
+/* ELEMENTOS QUE VÃO VOAR (ESTILO FANTA) */
+#ar-principal {
+    position: absolute;
+    width: 45%;         /* Aumentado um pouco para destacar o vento embutido */
+    top: 25%;           /* Ajustado para centralizar melhor a fumaça de ar */
+    right: 5%;
+    z-index: 4;
+    filter: drop-shadow(0px 15px 30px rgba(0,0,0,0.4)); /* Sombra suave para dar profundidade */
+}
+
+#gelo-1 {
+    position: absolute;
+    top: 15%;
+    right: 45%;
+    width: 8%;          /* Tamanho ideal para o cubo da esquerda */
+    z-index: 3;
+}
+
+#gelo-2 {
+    position: absolute;
+    top: 68%;
+    right: 12%;
+    width: 9%;          /* Tamanho ideal para a pedra do meio */
+    z-index: 5;
+}
+
+#vento-bg {
+    position: absolute;
+    top: 45%;           /* Posicionado mais abaixo para compor o cenário */
+    right: 35%;
+    width: 15%;         /* Menor, servindo como um detalhe extra voando */
+    opacity: 0.4;       /* Um pouco mais visível */
+    z-index: 2;
+    pointer-events: none;
 }
